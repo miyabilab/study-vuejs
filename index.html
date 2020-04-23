@@ -9,27 +9,23 @@
     <script src="vue.js"></script>
 
     <div id="app">
-        <p>現在{{ number }}回クリックされています。</p>
-        <button v-on:click="countUp">カウントアップ</button>
-        <p v-on:mousemove="changeMousePosition">マウスを載せてください</p>
-        <p>X: {{x}}、Y:{{y}}</p>
+        <ul>
+            <li v-for="(fruit, index) in fruits">({{index}}){{fruit}}</li>
+        </ul>
+        <ul>
+            <li v-for="(value, key, index) in object">({{index}}){{key}}-{{value}}</li>
+        </ul>
     </div>
 
     <script>
         new Vue({
             el: "#app",
             data: {
-                number: 0,
-                x:0,
-                y:0,
-            },
-            methods: {
-                countUp: function() {
-                    this.number += 1
-                },
-                changeMousePosition: function(event) {
-                    this.x = event.clientX;
-                    this.y = event.clientY;
+                fruits: ['apple', 'banana', 'grape'],
+                object: {
+                    firstName: 'masashi',
+                    lastName: 'noguchi',
+                    age: 43,
                 }
             }
         })
