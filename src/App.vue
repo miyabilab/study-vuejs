@@ -3,6 +3,19 @@
     <button @click="myAnimation = 'slide'">Slide</button>
     <button @click="myAnimation = 'fade'">Fade</button>
     <p>{{ myAnimation }}</p>
+    <br>
+    <button @click="add">追加</button>
+    <ul style="width: 200px; margin: auto;">
+      <transition-group name="fade">
+        <li
+          style="cursor: pointer;"
+          v-for="(number, index) in numbers"
+          @click="remove(index)"
+          :key="number">{{ number }}</li>
+      </transition-group>
+    </ul>
+
+    <br>
     <button @click="show = !show">切り替え</button>
     <br><br>
     <transition 
@@ -59,10 +72,22 @@ export default {
     return {
       show: true,
       myAnimation: "slide",
-      myComponent: "ComponentA"
+      myComponent: "ComponentA",
+      numbers: [0,1,2],
+      nexNumber: 3,
     };
   },
   methods: {
+    randomIndex() {
+      return Math.floor(Math.random() * this.numbers.length);
+    },
+    add() {
+      this.numbers.splice(this.randomIndex(), 0, this.nexNumber);
+      this.nexNumber += 1;
+    },
+    remove(index) {
+      this.numbers.splice(index, 1);
+    },
     beforeEnter(el) { // eslint-disable-line
       // 現れる前
       el.style.transform = 'scale(0)'
@@ -118,6 +143,7 @@ export default {
   border-radius: 100px;
   background-color: deeppink;
 }
+
 .fade-enter {
   /*  現れる時の最初の状態 */
   opacity: 0;
